@@ -1,5 +1,6 @@
 package com.example.mymoneyexchanger.data
 
+import com.example.mymoneyexchanger.data.mapper.MoneyExchangeMapper
 import com.example.mymoneyexchanger.data.remotesource.MoneyExchangeService
 import com.example.mymoneyexchanger.domain.repository.MoneyExchangeRepository
 import kotlinx.coroutines.flow.Flow
@@ -7,7 +8,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MoneyExchangeRepositoryImpl @Inject constructor(
-    private val service: MoneyExchangeService
+    private val service: MoneyExchangeService,
+    private val mapper: MoneyExchangeMapper
 ) : MoneyExchangeRepository {
 
     companion object{
@@ -17,7 +19,9 @@ class MoneyExchangeRepositoryImpl @Inject constructor(
     override suspend fun getMoneyCursesRepo(firstPair: String, secondPair: String): Flow<String> {
         val result = service.getMoneyCurses(firstPair, secondPair)
         return if (result.isSuccessful) {
-            flow { emit(result.body()?.conversionRate .toString()) }
+            val responseServer = result.body()
+            val mappedValue = responseServer?.let { mapper.moneyExchangeDtoToMoneyExchange(it) }
+            flow { emit( mappedValue?.conversionRate.toString()) }
         } else {
             flow { emit("Error: ${result.code()}") }
         }
