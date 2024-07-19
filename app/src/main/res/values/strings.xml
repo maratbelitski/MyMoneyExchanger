@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MyMoneyExchanger</string>
+    <string name="enter_value">Введите сумму:</string>
+    <string name="choose_currency">Выберите валюту:</string>
+    <string name="currency_hint">укажите сумму</string>
+    <string name="convert_to">Конвертировать в:</string>
+    <string name="calculate_btn">Рассчитать</string>
+    <string name="result_text">Результат</string>
+
+
 </resources>

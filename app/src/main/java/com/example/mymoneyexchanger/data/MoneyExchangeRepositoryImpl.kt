@@ -13,7 +13,7 @@ class MoneyExchangeRepositoryImpl @Inject constructor(
 ) : MoneyExchangeRepository {
 
     companion object{
-        private const val COUNT_SIZE = "%.3f"
+        private const val COUNT_SIZE = "%.2f"
     }
 
     override suspend fun getMoneyCursesRepo(firstPair: String, secondPair: String): Flow<String> {
@@ -27,7 +27,7 @@ class MoneyExchangeRepositoryImpl @Inject constructor(
         }
     }
 
-    //API is not possible to change the amount, so i do it
+    //API is not possible to change the amount, so I do it
    suspend fun countMoneyRepo(count: String, serverResponse: String): String {
         val response = serverResponse.toDouble()
         val value = count.toDouble()
