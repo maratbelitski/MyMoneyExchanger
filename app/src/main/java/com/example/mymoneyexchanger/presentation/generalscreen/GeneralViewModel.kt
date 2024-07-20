@@ -1,5 +1,6 @@
 package com.example.mymoneyexchanger.presentation.generalscreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymoneyexchanger.data.MoneyExchangeRepositoryImpl
@@ -26,14 +27,23 @@ class GeneralViewModel @Inject constructor(
     val moneyCurs: StateFlow<String>
         get() = _moneyCurs.asStateFlow()
 
+    private val _exception = MutableStateFlow(DEFAULT_VALUE)
+    val exception: StateFlow<String>
+        get() = _exception.asStateFlow()
+
     fun getMoneyCurses(firstPair: String, secondPair: String, amount: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            val result = manyCurses.invoke(firstPair, secondPair)
-            result.collect {
-                if (it.isNotEmpty()) {
-                    _moneyCurs.value = "${countMoney(it, amount)} $secondPair"
+            try {
+                val result = manyCurses.invoke(firstPair, secondPair)
+                result.collect {
+                    if (it.isNotEmpty()) {
+                        _moneyCurs.value = "${countMoney(it, amount)} $secondPair"
+                    }
                 }
+            } catch (e: Exception){
+                _exception.value = e.toString()
+                Log.i("MyLog", e.toString())
             }
         }
     }
