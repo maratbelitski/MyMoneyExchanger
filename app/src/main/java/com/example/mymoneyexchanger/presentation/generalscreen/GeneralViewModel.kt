@@ -26,19 +26,21 @@ class GeneralViewModel @Inject constructor(
     val moneyCurs: StateFlow<String>
         get() = _moneyCurs.asStateFlow()
 
-    fun getMoneyCurses(firstPair: String, secondPair: String) {
+    fun getMoneyCurses(firstPair: String, secondPair: String, amount: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
             val result = manyCurses.invoke(firstPair, secondPair)
             result.collect {
-                _moneyCurs.value = it
+                if (it.isNotEmpty()) {
+                    _moneyCurs.value = "${countMoney(it, amount)} $secondPair"
+                }
             }
         }
     }
 
-    suspend fun countMoney(count: String, serverResponse: String): String {
+    private suspend fun countMoney(amount: String, serverResponse: String): String {
         return viewModelScope.async(Dispatchers.IO) {
-            repository.countMoneyRepo(count, serverResponse)
+            repository.countMoneyRepo(amount, serverResponse)
         }.await()
     }
 }
