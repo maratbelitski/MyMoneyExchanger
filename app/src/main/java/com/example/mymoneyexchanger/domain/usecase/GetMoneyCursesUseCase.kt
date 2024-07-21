@@ -6,6 +6,6 @@ import javax.inject.Inject
 class GetMoneyCursesUseCase @Inject constructor(
     private val repository: MoneyExchangeRepository
 ) {
-    suspend operator fun invoke(firstPair: String, secondPair: String) =
-        repository.getMoneyCursesRepo(firstPair, secondPair)
+    suspend operator fun invoke(firstCurrency: String, secondCurrency: String) =
+        repository.getMoneyCursesRepo(firstCurrency, secondCurrency)
 }

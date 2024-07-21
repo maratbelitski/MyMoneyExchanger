@@ -33,6 +33,7 @@ class GeneralFragment : Fragment() {
 
     private val viewModel: GeneralViewModel by viewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,10 +55,11 @@ class GeneralFragment : Fragment() {
             with(binding) {
                 var amount = binding.etSumInput.text.toString()
                 if (amount.isEmpty()) amount = DEFAULT_AMOUNT
-                val firstPair = spinnerFirstPair.selectedItem.toString()
-                val secondPair = spinnerSecondPair.selectedItem.toString()
 
-                viewModel.getMoneyCurses(firstPair, secondPair, amount)
+                val firstCurrency = spinnerFirstCurrency.selectedItem.toString()
+                val secondCurrency = spinnerSecondCurrency.selectedItem.toString()
+
+                viewModel.getMoneyCurses(firstCurrency, secondCurrency, amount)
             }
         }
     }
@@ -84,8 +86,8 @@ class GeneralFragment : Fragment() {
         val listCurrency = listOf(BYN, USD, RUB, EUR)
         val myAdapter = ArrayAdapter(requireActivity(), R.layout.spinner_text_item, listCurrency)
 
-        binding.spinnerFirstPair.adapter = myAdapter
-        binding.spinnerSecondPair.adapter = myAdapter
+        binding.spinnerFirstCurrency.adapter = myAdapter
+        binding.spinnerSecondCurrency.adapter = myAdapter
     }
 
     private fun showToast(text:String){

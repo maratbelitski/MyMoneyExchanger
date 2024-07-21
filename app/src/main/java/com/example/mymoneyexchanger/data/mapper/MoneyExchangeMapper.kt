@@ -7,8 +7,8 @@ class MoneyExchangeMapper @Inject constructor() {
     fun moneyExchangeDtoToMoneyExchange(moneyExchangeDto: MoneyExchangeDto): MoneyExchange {
 
         return MoneyExchange(
-            firstPair = moneyExchangeDto.firstPair,
-            secondPair = moneyExchangeDto.secondPair,
+            firstCurrency = moneyExchangeDto.firstPair,
+            secondCurrency = moneyExchangeDto.secondPair,
             conversionRate = moneyExchangeDto.conversionRate
         )
     }

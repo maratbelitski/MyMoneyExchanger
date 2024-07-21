@@ -16,8 +16,8 @@ class MoneyExchangeRepositoryImpl @Inject constructor(
         private const val COUNT_SIZE = "%.2f"
     }
 
-    override suspend fun getMoneyCursesRepo(firstPair: String, secondPair: String): Flow<String> {
-        val result = service.getMoneyCurses(firstPair, secondPair)
+    override suspend fun getMoneyCursesRepo(firstCurrency: String, secondCurrency: String): Flow<String> {
+        val result = service.getMoneyCurses(firstCurrency, secondCurrency)
         return if (result.isSuccessful) {
             val responseServer = result.body()
             val mappedValue = responseServer?.let { mapper.moneyExchangeDtoToMoneyExchange(it) }
@@ -28,7 +28,7 @@ class MoneyExchangeRepositoryImpl @Inject constructor(
     }
 
     //API is not possible to change the amount, so I do it
-   suspend fun countMoneyRepo(count: String, serverResponse: String): String {
+   fun countMoneyRepo(count: String, serverResponse: String): String {
         val response = serverResponse.toDouble()
         val value = count.toDouble()
         val result = response * value

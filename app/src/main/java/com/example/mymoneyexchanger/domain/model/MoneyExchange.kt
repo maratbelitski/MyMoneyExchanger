@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MoneyExchange(
-    val firstPair: String,
+    val firstCurrency: String,
     val conversionRate: Double,
-    val secondPair: String,
+    val secondCurrency: String,
 ): Parcelable

@@ -31,14 +31,14 @@ class GeneralViewModel @Inject constructor(
     val exception: StateFlow<String>
         get() = _exception.asStateFlow()
 
-    fun getMoneyCurses(firstPair: String, secondPair: String, amount: String) {
+    fun getMoneyCurses(firstCurrency: String, secondCurrency: String, amount: String) {
         viewModelScope.launch(Dispatchers.IO) {
 
             try {
-                val result = manyCurses.invoke(firstPair, secondPair)
+                val result = manyCurses.invoke(firstCurrency, secondCurrency)
                 result.collect {
                     if (it.isNotEmpty()) {
-                        _moneyCurs.value = "${countMoney(it, amount)} $secondPair"
+                        _moneyCurs.value = "${countMoney(it, amount)} $secondCurrency"
                     }
                 }
             } catch (e: Exception){
